@@ -19,3 +19,30 @@
 		$pagination	= $this->page('anggota/index');
 		$this->load->view('page',compact('title','main_view','rows','pagination'));	
 	}
+	public function addData()
+	{
+		$title='Data Anggota/Data Baru';
+		$main_view='anggota/addForm';
+		$ida = $this->AnggotaModel->autoid();
+		$this->_set_rules();
+	if ($this->form_validation->run()==TRUE) {
+	$data=[
+			'id_anggota'=>$this->input->post('tId'),			
+			'nm_anggota'=>$this->input->post('tNama'),
+			'alamat'=>$this->input->post('tAlamat'),			
+			'ttl_anggota'=>$this->input->post('tTTL'),
+			'status_anggota'=>$this->input->post('tStatus')
+	];
+	//print_r($data)
+	$this->AnggotaModel->tambahdata($data);
+	$this->session->set_flashdata('pesan','Data Telah Di Tambah...');
+	redirect('anggota','refresh');
+	}else{
+		$this->load->view('page',compact('main_view','title','ida'));
+	}
+	}
+
+
+
+
+
