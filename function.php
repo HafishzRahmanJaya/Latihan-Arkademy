@@ -1,4 +1,4 @@
-public function index($offset=0,$order_column='id_anggota',$order_type='asc'){
+	public function index($offset=0,$order_column='id_anggota',$order_type='asc'){
 		if(empty($offset)) $offset=0;
 		if(empty($order_column)) $order_column='id_anggota';
 		if(empty($order_type)) $order_type='asc';
@@ -8,4 +8,14 @@ public function index($offset=0,$order_column='id_anggota',$order_type='asc'){
 		$main_view	= 'anggota/tampil';
 		$pagination = $this->page('anggota/index/');
 		$this->load->view('page',compact('title','main_view','rows','pagination'));
+	}
+	public function cari()
+	{
+		$cariberdasarkan=$this->input->post('select_cari');
+			$yangdicari=$this->input->post('tcari');
+			$rows=$this->AnggotaModel->cari($cariberdasarkan,$yangdicari);
+		$title		= 'Data Anggota';
+		$main_view	= 'anggota/tampil';
+		$pagination	= $this->page('anggota/index');
+		$this->load->view('page',compact('title','main_view','rows','pagination'));	
 	}
